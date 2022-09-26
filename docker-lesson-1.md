@@ -35,6 +35,7 @@
 
 ## Containers vs Virtual Machines
 
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/containers-vs-virtual-machines.jpg)
 - 
 
 </strong>
