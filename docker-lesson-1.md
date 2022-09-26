@@ -23,7 +23,19 @@
 - The Concept of Docker is not very new and has exsisted for a decade now(from 2022) and some of the tthe different type of containers are `LXC`, `LXD` and `LXCFS` etc.
 - Docker utilizes LXC containers setting up these container environements. Setting up these container env is hard as they are very low level and that is where docker offers high level tool with several powerful functionalities making it really easy for end users like us to understand how docker works.
 - If we look at operating systems like Ubuntu, Fedora, Suse or Centos - they all consist of 2 things - an OS Kernel and a set of software.
-- The OS Kernel is responsible for interacting with the underlying hardware while the OS Kernel remains the smae which is Linux in this case. It's the software above it that makes the Operating System different.
+- The OS Kernel is responsible for interacting with the underlying hardware while the OS Kernel remains the smae which is Linux in this case. It's the software above it that makes the Operating System different. This software may consist of different user interface drivers, compilers, file managers, dveloper tools etc.
+- So, we have a common kernel shared across all the OS and some custom software that differentiate OS from each other.
+- Sharing the Kenel:
+  - Let's say we have a system with Ubuntu OS with Docker installed on it. Docker can any OS on top of it as long as they are all based on the same kernel, in this case linux. If the underlying OS is Ubuntu Docker can run a container based on another distribution like Debian, fedora, suse or centos. Each docker container has this one specific diffrentiated software that makjes these operatring system different and docker utilizes the underlying kernel of the docker host which work with all the OSes above.
+- So, what is an OS that donot share the smae kernel as these `Windows` !!
+  - And so we won't be able to run a Windows based container on a docker host with linux  on it for that, you will require a docker on a windows server. 
+  - So, when we install docker on windows and run a Linux based Container on windows we aren't really running a linux container on windows. Windows runs a linux container on windows Virtual Machine under the hood, so it's really Linux Container on Linux Viirtual Machine on windows.
+- Unlike Hypervisor, Docker is not meant to virtualize and run different OS and kernels on same hardware.
+- The main purpose of docker is to package and containerized applications and ship them and run them anywhere any times as many times as we want to.
+
+## Containers vs Virtual Machines
+
+- 
 
 </strong>
 </p>
