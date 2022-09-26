@@ -10,7 +10,20 @@
   - `Orchestration` : `Ansible`
 - It's difficult to build this application with all these differnet componetns.
 - Mainly, there compatibility with the underlying OS is a big issue. We have to ensure that all these services are com[paitble with the OS version we are working on or planning to use.
-- Than we have to check the compatibility of the versions of libraries an dependencies on the OS. Then we have to check compatibility pf services with the library. There may be cases when one service requires a specific version of dependent library, where ass another service requires another version.
+- Than we have to check the compatibility of the versions of libraries an dependencies on the OS. Then we have to check compatibility pf services with the library. There may be cases when one service requires a specific version of dependent library, whereas another service requires another version of the same library.
+- The architecture of the application would need to be changed over time. As they upgrade to the newer versions of these components or change the database etc.. and every time something changes the developer needs to go throught the process of compatibility check b/w these various components and the underlying infrastructure. 
+- This compatibility metrics issue is usually reffered to as `The Matrix from Hell!!`.
+- Every time a new developer is on-boarded to the team to work on project, it's difficult to setup a new environment. As they have to follow a large set of instructions and hundreds of commands to finally setup there environemnt.
+- In Docker, we are able to run each component in seprate containers with it's own dependecies and libraries all on the same VM and the OS but within seprate environments or containers we jsut had to build the docker configuration once and all our developers could now get started with a simple docker run command, irrespective of what underlying operating system they run.
+
+## What are Containers ?
+
+- Containers are completely isolated environements.
+- As in they can have there own processes or services their own network interfaces their own mounts just like VMs, except the fact that they share same OS Kernel.
+- The Concept of Docker is not very new and has exsisted for a decade now(from 2022) and some of the tthe different type of containers are `LXC`, `LXD` and `LXCFS` etc.
+- Docker utilizes LXC containers setting up these container environements. Setting up these container env is hard as they are very low level and that is where docker offers high level tool with several powerful functionalities making it really easy for end users like us to understand how docker works.
+- If we look at operating systems like Ubuntu, Fedora, Suse or Centos - they all consist of 2 things - an OS Kernel and a set of software.
+- The OS Kernel is responsible for interacting with the underlying hardware while the OS Kernel remains the smae which is Linux in this case. It's the software above it that makes the Operating System different.
 
 </strong>
 </p>
