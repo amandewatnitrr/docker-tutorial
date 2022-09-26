@@ -1,5 +1,5 @@
 # Docker
-!()[https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/docker_png.png]
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/docker_png.png)
 
 ## Tutorial Content
 
