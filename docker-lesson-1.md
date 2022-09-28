@@ -62,7 +62,6 @@
 - Since, the OPs team didnot really develop the application on their own they struggle  with setting it up when they hit an isssue they work with the developers to resolve it.
 - With Docker, the developers and operations team work hand-in-hand to transform the guide into a docker file with both of thei requirements. This docker file is then used to create an image of their applications. This image can now run on any host with docker installed on it and is guaranted to run the smae way everywhere.
 - So, the OPs team can now simply use the image to deploy the application since the image was already working when the developer built it and operations have not modified it. It continues to work the same way when deployed in production.
-- 
 
 </strong>
 </p>
