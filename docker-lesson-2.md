@@ -3,7 +3,9 @@
 
 # Basic Docker Commands
 
+<center>
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/docker-volume-mapping-header.gif)
+</center>
 
 ## `docker run <image-name>` - Run a docker container
 
