@@ -8,7 +8,7 @@
 ## `docker run <image-name>` - Run a docker container
 
 - The Docker run command is used to run a container from an  image.
-- Running the `docker run <image-name></image-name>` command will run an instance of that image application on the docker host, that is it will create a container if it already exsists.
+- Running the `docker run <image-name>` command will run an instance of that image application on the docker host, that is it will create a container if it already exsists.
 - If the image is not present on the host, it will go out to docker hub and pull the image down. But this only happens first time, for the subsequent executions, the same image will be reused.
 
 ## `docker ps` - List docker containers
@@ -74,6 +74,66 @@
 - Now if you want to attach back to the running container later, run the docker attach command and specify the name or id of the docker container as follows:
   - `docker attach <container-id or container-name>`
 - Remember, if you are providing the ID of the container in any docker command  you can simply provide the first few charaters alone just so it is different from the other container ID on the host.
+- We can also run and name a container using the command `docker run --name <container-name> <image-name>`.
+
+### `run -tag` - What if we want to run a spcific version of a image??
+
+- In that case we use the concept of tag.
+- Let's suppose we want to use version 4.0 of an image, we do it using the command:
+  - `docker run <image-name>:version`
+- When the version is specified, docker instead of pulling the latest version available of the image, it pulls the specified version of the image and runs that.
+- Note: If we don't specify any tag, docker will consider the default tag to be latest.
+- Latest is the tag associated to the latest version of that imgae/software which is governed by the authours of that image or software.
+- But, what if we want to have info about the versions of the image available.
+  - At hub.docker.com lookup an image and you will find all the supported tags in it's despcription.
+  - Each version of the software can have multiple short and long tags associated with it.
+
+### `run -it` - User Command or Input during run
+
+- By default the docker container doesnot listen to any standard input, even though you are attached to it's console, it doesnot read any input from the user. It doesn't have any terminal to read inputs from.
+- It runs in a non-interactive mode.
+- If you would like to provide your input, you must map the standard input of your host to the docker container using `-i` parameter.
+- The `-i` parameter is for interactive mode and when i input my name, it prints the expected output.
+- But there's still something missing the prompt.
+- When you run a app, it wpould ask you for the input, but when dockerised the prompt is missing, even though it seems to have accepted my input. That is because the application prompt on the terminal and we have not attached to the containers terminal.
+- For this we use `-t` option as well, together use it as `-it`. `t` stands for pseudo terminal.
+
+### `docker run -p local_port:container_port --name container name <image-name>` - Port Publishing on Containers
+
+- The Underlying host where Docker is installed is called Docker Host or Docker Engine.
+- When we run a containerized web application, it runs and we are able to see that the server is running.
+
+- But than how does a user access my application??
+
+  - As we can see, my application is listening on port `x.y.z.k:port_number`, so we can access this application by using this mentioned port number.
+- But what IP do I use it to access it form a Web Browser??
+  
+  - For this there are 2 options available:
+    - Using the IP of the Docker Container. Every Docker container gets an IP Assigned by default. But remember this is an internal IP and is only accessible within the docker host. So, when we open the application on browser from within the dcoker host, you can go to `http://w.x.y.z:port_number` to access the IP Address.
+    - But since, the IP above we talked about is an internal IP, users outside the docker host cannot access it using this IP. For this we can use the IP of the docker host whcih is `k.l.m.n` but for that to work we need to map the port inside the docker container to a free port on the docker host.
+      - For example, If I want my users to access the application through port 80 on my docker host, we can map port 80 of local host to port 5000 on the docker container using `-p` parameter in my run command like `docker run -p local_port:container_port --name container name <image-name>`.
+      - And so the user can access the application by going to the URl obtainer from the docker.
+      - And all trafic on port 80 on my docker host will get routed to port 5000 inside the docker container.
+
+### Volume Mapping
+
+- Let's now have a look at how data is persisted in a Docker Container.
+- For example let's say you were to run a MySQL Container. When Databases and tables are created. The datafiles are located at some location inside the docker container. Remember the docker container has it's own isolated fiel system and any changes to any files happen within the container. let's assume we dump a lot of data in our database, what if we delete or remove the MySQL Container. As soon as we do that the container along with all the data inside it gets blown away, meaning all your data is gone.
+- If we would like to persist data, we want to map a directory outside the container on the docker host to a directory inside the container.
+- In this case I create a directory and map that to MySQL inside the docker container using `-v` option and specifying the directory on the docker host followed by a colon and the directory inside the docker container.
+- This way when the docker container runs , it will implicity mount the external directory to the folder inside the docker container.
+- This way all the data will be stored in external volume at the specified location data directory and thus the data persists even if we delete the docker container.
+
+## `docker inspect <container_name or container_ID>` - Inspect the container
+
+- The `docker ps` command is good enough to get basic details about containers like their names and IDs.
+- But if we want to see additional details about container use the `docker inspect <container_name or container_ID>` command.
+- It returns all details of a container in a JSON Format such as the state, mounts, configuration data, network settings etc.
+- Remeber to use it when you are required to find details on a container.
+
+## `docker logs <container_name or container_ID>` - Container Logs
+
+- Used to view the logs which happens to be the content written to standard out of the container.
 
 # Demo Examples
 
@@ -87,8 +147,6 @@
   ```
 
   - We can exit it by using the `exit` command.
-
-- 
 
 </strong>
 </p>
