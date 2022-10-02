@@ -59,5 +59,27 @@
   - To make it available on the `Public Docker Hub Registry`, run the docker push command and specify the name of the image you just created.
     - `docker push username/app_name`
 
+### Layered Architecture
+
+- When docker builds the images, it builds these in alayered architecture.
+- Each line of instruction creates a new layer in the Dcoker Image with just the changes from previous layer. 
+- For example, in the case discussed previously:
+  - Layer 1. Base Ubuntu Layer
+  - Layer 2. Changes in apt packages
+  - Layer 3. Changes in pip packages
+  - Layer 4. Source Code
+  - Layer 5. Update Entrypoint with "flask" command
+- Since each layer only stores the changes from the previous layer, it is reflected in the size as well.
+  - We can view this by using `docker history usernmae/app_name` command.
+- When we run the `docker build` command, we can see the various steps involved and the result of each task.
+- All the layers built are cast, so the layer architecture helps you restart docker build from that partiucular step in case it fails.
+- Or if we were to add new steps in build process, you wouldn't have to stgart all over again.
+- All the layers built are cached by docker.
+- So, in case a particular step was to fail and we were to fix the issue and rerun `docker build` command, it will reuse the previous layers from cache and continue to build the remaining layers.
+- The same is true if we were to add additional steps in docker file.
+- This way rebuilding the image is faster and you don't have to wait for docker to rebuild the entire image each time.
+- This is helpful specially when you update source code of your application as it may change more frequently.
+- Only the layers above the updated layers need to be rebuilt.
+
 </strong>
 </p>
