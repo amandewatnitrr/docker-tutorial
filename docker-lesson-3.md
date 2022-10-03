@@ -81,5 +81,75 @@
 - This is helpful specially when you update source code of your application as it may change more frequently.
 - Only the layers above the updated layers need to be rebuilt.
 
+## Environment Variables
+
+- Let's have a look at this example:
+
+  ```python
+  
+  import OS
+  flask import Flask
+
+  app = Flask(_ name_)
+
+  ..
+  ..
+
+  color = "red"
+  @app. route ("/")
+  def main():
+    print (color)
+    return render_template("hello.html', color=color)
+  
+  if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="8080")
+
+  ```
+
+- If you look closely at this application, we will see a line that sets background color to red.
+- But however, if we decide to change the application color in future, we will have to change the application code.
+- It is the best practice to move such information out of the application code and into an environment variable called `APP_COLOR` as follows:
+
+  ```python
+  
+  import OS
+  flask import Flask
+
+  app = Flask(_ name_)
+
+  ..
+  ..
+
+  color = os.environ.get('APP_COLOR')
+
+  @app. route ("/")
+  def main():
+    print (color)
+    return render_template("hello.html', color=color)
+  
+  if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="8080")
+
+  ```
+
+- The next time we run the application set an environment variable called `APP_COLOR` to a desired value and the application will now have the new colour specified. This can be done as follows:
+  
+  ```bash
+  export APP_COLOR=blue; python app.py
+  ```
+  
+- Once the application gets packaged into a docker image, we can set the color using `-e` option of docker run command that enables us to set the environment variable within the container to deploy multiple containers with different environment variable inputs. For our given example this would be:
+
+  ```docker
+    docker run -e APP_COLOR=blue app_image_name
+  ```
+
+- We can use docker run command multiple times and set a different value for environement variable each time.
+
+### `docker inspect <container_name or container_ID>`Inspect Environment Variable
+
+- So, how do we find the environment variable set on a container that's already running.
+- Use the `docker inspect` command to inspect the properties of the running container under the config section we wil find the list of environment variables set on the container.
+
 </strong>
 </p>
