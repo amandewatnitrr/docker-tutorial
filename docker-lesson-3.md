@@ -49,7 +49,7 @@
     - Every docker image must be based off of another image, either an OS or another image that was created before based on an OS.
     - It's important to note that all docker files must start with a `FROM` instruction.
     - The `RUN` instruction instructs docker to run a particular command on those base images.
-    - So, at this point docker runs the apt-get update command to fetch the updated packages and installs required dependencies on the image. 
+    - So, at this point docker runs the apt-get update command to fetch the updated packages and installs required dependencies on the image.
     - Then `COPY` instruction copies file from the local system onto the docker image.
     - In this case, the source code of our  application is in the current folder and we will be coying it over to the location /opt.source_code inside the docker image.
     - `ENTRYPOINT` allows us to specify a command that will be run when the image is run as a container.
@@ -62,7 +62,7 @@
 ### Layered Architecture
 
 - When docker builds the images, it builds these in alayered architecture.
-- Each line of instruction creates a new layer in the Dcoker Image with just the changes from previous layer. 
+- Each line of instruction creates a new layer in the Dcoker Image with just the changes from previous layer.
 - For example, in the case discussed previously:
   - Layer 1. Base Ubuntu Layer
   - Layer 2. Changes in apt packages
@@ -150,6 +150,78 @@
 
 - So, how do we find the environment variable set on a container that's already running.
 - Use the `docker inspect` command to inspect the properties of the running container under the config section we wil find the list of environment variables set on the container.
+
+## CMD vs ENTRYPOINT
+
+- Let's assume a simple scenario: Say, we were to run a docker container from an Ubuntu Image.
+- When we run the `docker run ubuntu` command, it runs an instance of ubuntu image and exits immediately.
+- If we were to list the running conytainers using `docker ps` command, we would see nothing.
+- If we see all the list of containers including the stopped ones, we will find the new container in an exited state.
+- Unlike VMs, Containers are not meant to host an OS. Containers are meant to run a specific task or process such as to host an instance of web server or application server or a database or simply to carry out some kind of computation or analysis.
+- Once the task is complete, the container exits.
+- A Container only lives as long as the process inside it is alive.
+- If the web-service inside the container is stopped or crashes the container exits.
+- So, who defines what process is run within the container.
+- So, if we see the docker file for popular docker images like NGINX we will see an instruction called `CMD` which stands for `COMMAND` that defines the program that will be run within the container when it starts. For the `NGINX`, it is the `NGINX` command. For mysql, it is the `mysqld` command.
+- What we tried to do previously is to run a conmtainer with plain ubuntu operating system.
+- So, if you look at the docker file for the ubuntu, we will see it uses `bash` as the default command.
+- Now bash is not really a process like a web-server  or database server. It is a shell that listens for inputs from a terminal, if it cannot find a terminal it exits.
+- When we ran the ubuntu container earlier, docker created a container from the Ubuntu Image and launched the bash program. By default, docker does not attach a terminal to a container when it is run. And so the bash program doesnot find the terminal and so it exits. Since, the process that was started when the container was created finished the container exits as well.
+
+- So, how do we specify a diffferent command when we start a container.
+
+  - One option is to append a command to the docker run command and that way it overrides the default command specified within the image.
+    - In case, we exectue `docker run ubuntu` command with the `sleep 5` command added as option as follows:
+
+      ```bash
+        docker run ubuntu sleep 5
+      ```
+
+    - This way when the container starts it runs the sleep program waits for 5 seconds for execution to complete and than exits. But how do we make that change permanent. Say if we want to run the sleep command when it starts.
+    - In that case we will create a our own Image from the base Ubuntu Image and specify in new command. For our example, it will appear something like:
+
+      ```dockerfile
+        FROM Ubuntu
+
+        CMD sleep 5
+      ```
+
+    - There are different ways of specifying the command either the command simply is in a shell form or in a JSON array format as shown below.
+      - CMD command param1
+      - CMD ["command","param1"]
+    - But remember when we specify in JSON array format. The first element in the array should be the executable. In our case the `sleep` program.
+    - Donot specify the command and parameters together when using JSON format. The command and it's parameters should be separate elements in the list.
+    - So, now we can build our image using the `dodcker build` command and name it. For our example, it looks something like:
+
+      ```bash
+        docker build -t image_name .
+      ```
+
+    - But what if we want use to decide the number of seconds it sleeps everytime we exxecute `docker run` command.
+    - One option is to run `docker run` command with new command appended to it.
+    - The other way is using `ENTRYPOINT` command, using this  we only will pass the number of seconds the container needs to sleep  and it will be invoked automatically.
+
+      ```dockerfile
+        FROM Ubuntu
+
+        ENTRYPOINT ["sleep"]
+      ```
+
+    - The `ENTRYPOINT` instruction is like the command instruction as in we can specify the program that will be run when the container starts and whatever we specify on the command line  as input will get appended to the entrypoint.
+    - In case of the CMD instruction, the command line parameters passed will get replaced entirely whereas in case of ENTRYPOINT the command line parameters will get appended.
+    - But always remember that if we don't provide an input, it gives an error of missing operand.
+    - So, we can use CMD instruction back again to set a default value for the missing opernad in case not provided by the user, but should be strictly in JSON format. For our example, it appears something like:
+
+      ```dockerfile
+        FROM Ubuntu
+
+        ENTRYPOINT ["sleep"]
+        CMD ["5"]
+      ```
+
+    - So,  in the above example if we don't provide any input the container will sleep for 5 seconds automatically by it's own.
+    - And if we specify any input, it will override the CMD instruction.
+    - But what if we want to complete override our `ENTRYPOINT` instruction that we specifed before. We can do it using `--entrypoint` option in `docker run` command.
 
 </strong>
 </p>
