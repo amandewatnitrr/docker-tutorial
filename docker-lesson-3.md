@@ -146,7 +146,7 @@
 
 - We can use docker run command multiple times and set a different value for environement variable each time.
 
-### `docker inspect <container_name or container_ID>`Inspect Environment Variable
+### `docker inspect <container_name or container_ID>` - Inspect Environment Variable
 
 - So, how do we find the environment variable set on a container that's already running.
 - Use the `docker inspect` command to inspect the properties of the running container under the config section we wil find the list of environment variables set on the container.
