@@ -22,11 +22,11 @@
 - So, this is the architecture and data-flow of this sample voting application stack.
 <br>
   
-`Voting App` <img  alt="python" width="100px" src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=FFD733" /> -> 
-`In-Memory DB` <img  alt="redis" width="100px" src="https://img.shields.io/badge/Redis-DC382D?style=plastic&logo=redis&logoColor=white" /> ->
-`Worker` <img  alt=".NET" width="100px" src="https://img.shields.io/badge/.NET-512BD4?style=plastic&logo=NET&logoColor=white" /> ->
-`Database` <img  alt="PostgreSQL" width="100px" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=plastic&logo=PostgreSQL&logoColor=white" /> ->
-`Result-app` <img alt="Node.js" width="100px" src="https://img.shields.io/badge/node.js-339933?style=plastic&logo=node.js&logoColor=white" />
+`Voting App` <img  alt="python" src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=FFD733" /> -> 
+`In-Memory DB` <img  alt="redis" src="https://img.shields.io/badge/Redis-DC382D?style=plastic&logo=redis&logoColor=white" /> ->
+`Worker` <img  alt=".NET" src="https://img.shields.io/badge/.NET-512BD4?style=plastic&logo=NET&logoColor=white" /> ->
+`Database` <img  alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=plastic&logo=PostgreSQL&logoColor=white" /> ->
+`Result-app` <img alt="Node.js"  src="https://img.shields.io/badge/node.js-339933?style=plastic&logo=node.js&logoColor=white" />
 
 
 </strong>
