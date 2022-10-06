@@ -35,7 +35,7 @@
 
 # Introdcution to JSON Path
 
-<img src="https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json.gif" style="width: 60%; height: auto;"> </img>
+<img src="https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json.gif" style="width: 30%; height: auto;"> </img>
 
 - 
 
