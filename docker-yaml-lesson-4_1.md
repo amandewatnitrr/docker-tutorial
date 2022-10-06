@@ -33,9 +33,9 @@
 - Dictionary is unordered while lists are ordered collection.
 - Anyline starting with `#` in YAML is a comment.
 
-# Introdcution to JSON Path
-
+# Introdcution to JSON Path 
 <img src="https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json.gif" style="width: 30%; height: auto;"> </img>
+
 
 - 
 
