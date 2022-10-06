@@ -76,7 +76,7 @@
 
 - We starte by creating a dictionary of container names. We use the same name that we used in the docker run commands. So we take all the names and create a key with each of them.
 - Than under each item we specify which image to use. The key is the image and the value is the name of the image to use.
-- Next, inspect the commands and see what are the other options used. We published ports, so let's move those ports under respective containers. So, we create a property called ports that you would like to publish under that. 
+- Next, inspect the commands and see what are the other options used. We published ports, so let's move those ports under respective containers. So, we create a property called ports that you would like to publish under that.
 - Finally we are left with links. So, whichever container requires a link, create a property under it called links and provide an array of links.
 - Now that we are done with our docker compose file bringing up the stack is really simple.
 - Run the `docker-compose up` command to bring up the entire  application stack.
@@ -85,6 +85,7 @@
 
 - When we looked at the example of the simple voting-app, we assumed all the images are already built. 2 of the Redis and PostgreSQL Images are officially available on the docker hub, but the remaing three are our own applications. It's not nessecary that they are already built and avaialable in the docker registry. If we would like to instruct docker compose to run a docker build instead of trying to pull an image, we can replace the image line with build line and specify the location of directory which contains the application code and a docker file with instructions to build the docker image. In this example for the voting app, have all the application code in a folder named `vote` which contains all application code and added docker file, this time when we run the `docker-compose up` command, it will first build the images give a temporary name for it and than use those images to run containersusing the options we specified before.
 - Similarly use build option to build the other services from the respective folders.
+
   - ```yaml
       redis:
         image: redis
@@ -155,7 +156,8 @@
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/docker-compose.PNG)
 
 - Getting back to our application, so far we have been just deploying  all containers on the default bridge network. Let's say we modify the architecture a little bit ot containe the  traffic from different sources. For example, we would like to seprate the suer generated traffic from the application internal traffic. So, we create a front-end network dedicated for traffic from users and a backend network dedicated for traffic within the application. We than connect the user facing applications , whcih are the voting app  and the result app to the front end network and all the components to an internal backend network. The first thing we need to do if we were to use networks is to define the networks we are going to use.
-- In our case, we have 2 networks frontend and backend. So, create a new-property called networks at the root level  adjacent to the services in the docker compose file and  add a map of networks we are planning to use. Than under each service, create a `netwroks` property and provide a list of networks that service must attach to. 
+- In our case, we have 2 networks frontend and backend. So, create a new-property called networks at the root level  adjacent to the services in the docker compose file and  add a map of networks we are planning to use. Than under each service, create a `netwroks` property and provide a list of networks that service must attach to.
+
   - ```yaml
       version: 2
       services:
@@ -205,7 +207,6 @@
         front-end:
         back-end:
     ```
-    
 
 </strong>
 </p>
