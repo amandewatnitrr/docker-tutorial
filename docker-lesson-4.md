@@ -81,5 +81,131 @@
 - Now that we are done with our docker compose file bringing up the stack is really simple.
 - Run the `docker-compose up` command to bring up the entire  application stack.
 
+## `docker compose -build`
+
+- When we looked at the example of the simple voting-app, we assumed all the images are already built. 2 of the Redis and PostgreSQL Images are officially available on the docker hub, but the remaing three are our own applications. It's not nessecary that they are already built and avaialable in the docker registry. If we would like to instruct docker compose to run a docker build instead of trying to pull an image, we can replace the image line with build line and specify the location of directory which contains the application code and a docker file with instructions to build the docker image. In this example for the voting app, have all the application code in a folder named `vote` which contains all application code and added docker file, this time when we run the `docker-compose up` command, it will first build the images give a temporary name for it and than use those images to run containersusing the options we specified before.
+- Similarly use build option to build the other services from the respective folders.
+  - ```yaml
+      redis:
+        image: redis
+      db:
+        image: postgres:9.4
+      vote:
+        build: ./vote
+        image: voting-app
+        ports:
+          - 5000:80
+        links:
+          - redis
+      result:
+        build: ./result
+        image: result-app
+        ports:
+          - 5001:80
+        links:
+          - db 
+      worker:
+        build: ./worker
+        image: worker
+        links:
+          - redis
+          - db
+    ```
+
+## `docker compose -versions`
+
+- We will now look at different versions of docker compose file. This is important because we might see docker compose files in different formats at different places and wonder why some look different. Docker compose evolved over time and now supports lot more options than it did in the begining.
+- These are some nessecary points that can't be disregarded, the previous `docker-compose.yaml` file that we created duing our example, is `docker version 1`. For using any new version of docker that is 2 or 3. we need to specify it as `version: 2` or `version: 3` at the top of the docker-compose.yaml file.
+- With `docker 2` the added advantage is we no more need to specify links b/w the containers as we need to do in docker compose version 1 and same with docker compose 3.
+- If, we want to decide the startup order of the containers/images, in docker 2 version onwards, we can do it using `depends-on` option. In that case our example `docker-compose.yaml` file would look something like:
+
+  - ```yaml
+      version: 2
+      services:
+        redis:
+          image: redis
+        db:
+          image: postgres:9.4
+        vote:
+          build: ./vote
+          image: voting-app
+          ports:
+            - 5000:80
+          depends_on:
+            - redis
+        result:
+          build: ./result
+          image: result-app
+          ports:
+            - 5001:80
+          depends_on:
+            - worker
+        worker:
+          build: ./worker
+          image: worker
+          depends_on:
+            - redis
+            - db
+    ```
+
+- Version 2 docker is very much similar to Version 3 in terms of the structure of the docker-compose.yaml file meaning it has version specification at the top and a services section under which we put all the services, just like in Version 2. Make sure to specify version number as 3 on the top. Version 3 comes up with support for docker swarm, whcih we will see later on.
+
+## Networks in docker compose
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/docker-compose.PNG)
+
+- Getting back to our application, so far we have been just deploying  all containers on the default bridge network. Let's say we modify the architecture a little bit ot containe the  traffic from different sources. For example, we would like to seprate the suer generated traffic from the application internal traffic. So, we create a front-end network dedicated for traffic from users and a backend network dedicated for traffic within the application. We than connect the user facing applications , whcih are the voting app  and the result app to the front end network and all the components to an internal backend network. The first thing we need to do if we were to use networks is to define the networks we are going to use.
+- In our case, we have 2 networks frontend and backend. So, create a new-property called networks at the root level  adjacent to the services in the docker compose file and  add a map of networks we are planning to use. Than under each service, create a `netwroks` property and provide a list of networks that service must attach to. 
+  - ```yaml
+      version: 2
+      services:
+        
+        redis:
+          image: redis
+          networks:
+            - back-end
+
+        db:
+          image: postgres:9.4
+          networks:
+            - back-end
+          
+        vote:
+          build: ./vote
+          image: voting-app
+          ports:
+            - 5000:80
+          depends_on:
+            - redis
+          networks:
+            - front-end
+            - back-end
+        
+        result:
+          build: ./result
+          image: result-app
+          ports:
+            - 5001:80
+          depends_on:
+            - worker
+          networks:
+            - front-end
+            - back-end 
+        
+        worker:
+          build: ./worker
+          image: worker
+          depends_on:
+            - redis
+            - db
+          networks:
+            - back-end
+        
+      networks:
+        front-end:
+        back-end:
+    ```
+    
+
 </strong>
 </p>
