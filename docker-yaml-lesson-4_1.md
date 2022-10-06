@@ -33,11 +33,34 @@
 - Dictionary is unordered while lists are ordered collection.
 - Anyline starting with `#` in YAML is a comment.
 
-# Introdcution to JSON Path 
+# Introdcution to JSON Path
+
 <img src="https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json.gif" style="width: 30%; height: auto;"> </img>
 
+- JSON PATH is a query language that can help you parse data represented in JSON or YAML format.
+- Just like query language in popular database softwares like SQL. For any given data we apply a query and we can get a result, which is a subset of that data.
+- Similarly in the JSON world, `JSON PATH` is a query language that when applied to a given JSON dataset gives you result that are subset of that data.
 
-- 
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query.png)
+
+- The design goal of JSON is to be as simple as possible and be universally usable. This has reduced the readability of the data, to some extent. In contrast, the design goal of YAML is to provide a good human-readable format and provide support for serializing arbitrary native data structures.
+- While YAML uses Indentation to organise and structure data, JSON uses braces `{}` or curly brackets.
+- In YAML we use `-` to define an array or list, while we use `[]` to denote array in JSON, each element in JSON array is seprated by comma`,`.
+
+- ```JSON
+    {
+    "key1": "value1",
+    "array_name": [
+        "array-ele-1",
+        "array-ele-2",
+        "array-ele-3"
+    ],
+    "dict_map": {
+        "map-ele-1": "map-value-1",
+        "map-ele-2": "map-value-2",
+        "map-ele-3": "map-value-3"
+    }
+  ```
 
 </strong>
 </p>
