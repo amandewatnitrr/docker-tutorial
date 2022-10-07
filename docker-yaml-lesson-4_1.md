@@ -88,5 +88,39 @@
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query9.PNG)
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query10.PNG)
 
+## JSON PATH - KUBERNETES
+
+### Why JSON PATH ?
+
+- When you are working with production environments for kubernetes, we will need to see infor about 100s of nodes, 1000s of PODS, deployments and ReplicaSets, services and secrets etc.. and we will be using Kubctrl utility to view information about these objects. We will often have equirements where we will need to print summary of different states, about different resources, view different fields of all resources, query data about the resources based on different criteria etc.
+- Viewing such information by going through 1000s of these resources is an overwhelming task which is why Kubectrl supports a JSON PATH option  that makes filtering data across large datasets using complex criteria an easy task.
+
+### KubeCtl
+
+- KubeCtl utility is a Kubernetes CLI used for reading and writing the Kubernetes Objects. Every time we run a KubCtl command, it interacts with the Kubernetes API and so the `kube-apiserver`. The `kube-apiserver` speaks the JSON language, so it returns the request to the information in a JSON format.
+- The KubeCtl utility on receiving the information in a JSON format converts it into a human readable format and print it out to our screen. During that process, a lot of information that came in, in the JSON format is hidden in an effort to make the output readable by showing only the nessecary details.
+- And if you like to see additional details, we can use the `-o wide` option with the  `kubectl get nodes` command. This prints additional details,but again this is not complete. There are still a lot of detils that are not yet the part of this output. For example the resource capacity vailable on these nodes, conditions of the nodes, the hardware architecture, the images available in these nodes etc.
+- With JSON PATH Queries we can filter and format the output of the command as we like.
+
+#### How to JSON PATH in KubeCtl ?
+
+1. We need to know the command that will give me the required information in the raw format, i.e. identify KubeCtl commands. Example:
+
+   ```KubeCtl
+    kubectl get nodes
+    kubectl get pods
+   ```
+
+2. Inspect the command output in JSON format. For our example add the `-o json` option at the end to the command. It will rpint the output in a JSON Format.
+
+3. Look throught the structure of the JSON document and form the JSON PATH query that will retrieve the required information for you.
+
+4. Finally, use the JSON PATH Query we developed with same kubectl command. For that use the `-o=jsonpath=` option passing the same JSON PATH query, that we just developed. Remember we must encapsulate the JSON PATH query within `'{json_path_query}'` as specified.
+
+5. We now have Kubectl command with JSON PATH Query ready.
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query11.PNG)
+
+
 </strong>
 </p>
