@@ -85,7 +85,9 @@
 ## JSON PATH - LISTS
 
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/josn-path-query8.PNG)
+
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/josn-path-query9.PNG)
+
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/josn-path-query10.PNG)
 
 </strong>
