@@ -41,7 +41,7 @@
 - Just like query language in popular database softwares like SQL. For any given data we apply a query and we can get a result, which is a subset of that data.
 - Similarly in the JSON world, `JSON PATH` is a query language that when applied to a given JSON dataset gives you result that are subset of that data.
 
-![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query.PNG)
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query1.PNG)
 
 - The design goal of JSON is to be as simple as possible and be universally usable. This has reduced the readability of the data, to some extent. In contrast, the design goal of YAML is to provide a good human-readable format and provide support for serializing arbitrary native data structures.
 - While YAML uses Indentation to organise and structure data, JSON uses braces `{}` or curly brackets.
@@ -61,6 +61,26 @@
         "map-ele-3": "map-value-3"
     }
   ```
+
+- The top level dictionary which has no name is `root element` of a JSON document. The root element is denoted by a `$`. So, all the above, queries will work only after adding `$.` in front of each query. That's the right way to form a json path query.
+- All results of a JSON PATH Query are encapsulated within an array.
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query2.PNG)
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query3.PNG)
+
+## JSON PATH - Criteria
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query4.PNG)
+
+    ?() => Check if
+    @ => each element of the array
+    $[?(criteria)] // Syntax for JSON PATH Criteria with JSON Array/List.
+
+## JSON PATH - WILD CARD
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query5.PNG)
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query6.PNG)
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query7.PNG)
 
 </strong>
 </p>
