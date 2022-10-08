@@ -1,5 +1,3 @@
-# Getting started with Docker
-
 <p align="justify">
 <strong>
 
