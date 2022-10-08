@@ -117,7 +117,7 @@
 
 4. Finally, use the JSON PATH Query we developed with same kubectl command. For that use the `-o=jsonpath=` option passing the same JSON PATH query, that we just developed. Remember we must encapsulate the JSON PATH query within `'{json_path_query}'` as specified.
 
-5. We now have Kubectl command with JSON PATH Query ready.
+5. We now have Kubectl command with JSON PATH Query ready.  
 
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/json-path-query11.PNG)
 
