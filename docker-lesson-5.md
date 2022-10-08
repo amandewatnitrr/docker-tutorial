@@ -31,5 +31,11 @@
 - Now that we have our custom registry running at port 5000 on this docker host. How do we push our own image to it.
 - Use the `docker image tag my-image-name localhost:5000/my-ima` command, to tag the image with a private registry URL in it. In this case, since it is running on the same docker host, I can use `localhost:5000` followed by the image name. I can than push my image to my local private registry using the `docker push localhost:5000/my-image-name` with the docker registry information in it, from there on I can pulll my image from anywhere within the network using either local hosts, if we are on the same host or the IP or Domain Name of my docker host, if I am accessing from another host in my environment.
 
+# Docker Engine
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker4.png)
+
+- 
+
 </strong>
 </p>
