@@ -35,7 +35,8 @@
 
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker4.png)
 
-- 
+- Docker engine as we have learned before is simply refered to a host with docker installed on it.
+- When we install docker on a linux host, we're actually installing three different competence. The <img src="https://img.shields.io/badge/Docker_Daemon-2496ED?style=plastic&logo=Docker&logoColor=white">, <img src="https://img.shields.io/badge/REST_API_SERVER-FF6C37?style=plastic&logo=POSTMAN&logoColor=white"> and <img src="https://img.shields.io/badge/Docker_CLI-2496ED?style=plastic&logo=Docker&logoColor=white">
 
 </strong>
 </p>
