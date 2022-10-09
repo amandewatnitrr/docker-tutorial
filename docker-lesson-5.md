@@ -36,7 +36,27 @@
 ![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker4.png)
 
 - Docker engine as we have learned before is simply refered to a host with docker installed on it.
-- When we install docker on a linux host, we're actually installing three different competence. The <img src="https://img.shields.io/badge/Docker_Daemon-2496ED?style=plastic&logo=Docker&logoColor=white">, <img src="https://img.shields.io/badge/REST_API_SERVER-FF6C37?style=plastic&logo=POSTMAN&logoColor=white"> and <img src="https://img.shields.io/badge/Docker_CLI-2496ED?style=plastic&logo=Docker&logoColor=white">
+- When we install docker on a linux host, we're actually installing three different competence. The <img src="https://img.shields.io/badge/Docker_Daemon-2496ED?style=plastic&logo=Docker&logoColor=white">, <img src="https://img.shields.io/badge/REST_API_SERVER-FF6C37?style=plastic&logo=POSTMAN&logoColor=white"> and <img src="https://img.shields.io/badge/Docker_CLI-2496ED?style=plastic&logo=Docker&logoColor=white">.
+- The Diocker Daemon is a backgorund process that manages docker objects such as the images, containers, volumes and networks. The Docker REST API SERVER is the API Interface that programs can use to talk to the Daemon and provide instructions.
+- You could create your own tools using this REST API, and the Docker CLI is nothing but the Command line interface that we have been using untill now to perform actions such as running containers, stopping them, deleting them, deleting images etc.
+- It uses the REST API to interact with the Docker Daemon. Something to note here is that, the Docker CLI need not nessecarily be on the same host. It could be on another system like a laptop and can still work with a remote docker engine.
+- Simply use `-H` option on the docker command and specify the remote Docker engine Address and the port as follows:
+  
+  ```bash
+    docker -H=remote-docker-engine:port_number
+  ```
+
+- For example, to run a container based on NGINX on a remote docker host run the command: `docker -H=10.123.2.1:2375 run -d --name=nginx nginx`.
+
+## Containerization
+
+- Docker uses namespaces to isolate workspace, process ids, network, inter-rocess communication mounts and UNIX time sharing systems are created in their own namespace thereby providing isolation b/w conatiners.
+- Let's take a look at one of the isolation technique "Prcoess ID Namespaces".
+- Whenever a Linux system boots up it starts with just one process with a Process ID of '1'. This is the root process and kicks off all the other processes in the system. By the time computer boots up completely, we have a handful of processes running. This can be seen by running the `ps` command to list all the running processes.
+- The Process IDs are unique and 2 processes cannot have same process ID. Now if we were to create a container which is basically like a child system within the current system. The child system needs to think that it is an independent system on it's own and it has it's own set of processes originating from a root process with a process ID of "1", but we know that there is no hard isolation b/w the containers and the underlying host. So, the process running inside the container are infact processes running on the underlying host.And so, 2 processes cannot have the same process ID of "1".
+- This is where namespaces come into play with process ID namespaces. Each process can have multiple processes associated with it. For example, when the processor start in the container it's actually just another set of processes on the base linux system and it gets the next available process ID, let'say 5 and 6. However, they also get another process ID starting with PID 1 in the container namespace which is only visible inside the container. So the container thinks that it has it's own root process tree and so it is an independent system. But how does that relate to an actual systm.
+- 
+
 
 </strong>
 </p>
