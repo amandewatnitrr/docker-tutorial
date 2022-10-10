@@ -7,7 +7,7 @@
 
 - If the containers were the rain, than they will rain from docker registry which are the clouds. That's where the docker images are stored.
 - It's a central repository of all docker images.
-- Let's consider a simple example where we have a simple nginx container. We run the `docker run nginx` command, to run an instance of the nginx imgae. Let's took a closer look at this image name. The image name is nginx `image: nginx`. 
+- Let's consider a simple example where we have a simple nginx container. We run the `docker run nginx` command, to run an instance of the nginx imgae. Let's took a closer look at this image name. The image name is nginx `image: nginx`.
 - But what is this image and where is the image pulled form. This name follows Docker Image naming convention. "nginx" here is the image or the repository name. When we say `nginx`, it's actually `nginx/nginx`.
 - The first part stands for the user or accounting. So, if we don't provide an account or repository name it assumes that it is same as the given name which in this case is nginx.
 - The user name is usually, your Docker Hub account name or if it is an organization, then it's the name of the organization.
@@ -66,8 +66,59 @@
   
 - Docker uses 3 groups or control groups to restrict the amount of hardware resources allocated to each container. This can be done by providing the `--CPU` option to the docker run command. For example `docker run --cpu=0.5 ubuntu` command will ensure that the ubuntu container does not take up more than 50% OF THE host CPU at any given time. <br>
   
-- The same goes with memory. For example running `docker run --memory=100m ubuntu` command. Here setting `--memory` option limits the amount of memory the container can use to 100MB only.SSS
+- The same goes with memory. For example running `docker run --memory=100m ubuntu` command. Here setting `--memory` option limits the amount of memory the container can use to 100MB only.
 
+# Docker Storage
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/0_GdJIbmPH1JLSLSj1.gif)
+
+- When we install docker on a system, it creates this folder structure at `var/lib/docker`. We have multiple folder under it called aufs, containers, image, volumes etc. This is where docker stores all it's data by default. When we say data we mean files related to images and containers running on the docker host.
+- For example, all files related to containers are stored under the containers folder and the files related to images are stored under the image folder. Any volumes created by the docker container are created under the volumes folder.
+- So, hwo exactly does docker stored the files of an image and a container. We need to understand Docker's Layered Architecture. When docker builds these images, it builds them in a layered architecture.
+- Each line of instruction in the `dockerfile` creates a new layer in the docker image with the changes from the previous layer.
+- Let's consider an example. Let's say we have 2 applications aand docker files for them as follows:
+  
+  ```Dockerfile
+  
+    FROM Ubuntu
+
+    RUN apt-get update && apt-get -y install pyhton
+
+    RUN pip install flask flask-mysql
+
+    COPY . /opt/source-code
+
+    ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+
+  ```
+
+  ```Dockerfile
+  
+    FROM Ubuntu
+
+    RUN apt-get update && apt-get -y install pyhton
+
+    RUN pip install flask flask-mysql
+
+    COPY  app2.py /opt/source-code
+
+    ENTRYPOINT FLASK_APP=/opt/source-code/app2.py flask run
+
+  ```
+
+  In the first application, the first layer is a base ubuntu operating system followed by the second instruction that creates a second layer which installs all the apt packages, and than the 3rd instruction creates a third layer with the python packages followed by the fourth layer that copies the source code over and then finally the fifth layer  that updates the entry point of the image since each layer only stores. Since each layer only stores the changes from the previous layer. It is reflected in the size as well.
+  
+  To consider the advantage of the layered architecture, let's suppose that we have an another application which has a different docker file represented by the 2nd one above, but is similar to our first application. As it uses the same base image as Ubuntu, uses the same python and flask dependencies but uses a different source code to create a different application. And so a different ENTRYPOINT as well.
+
+  When we run the `docker build` command to build a new image for the 2nd application. Since, the first 3 layers of both the application are the same, docker is not going to build the first three layers. Instead it uses the same three layers, it built for the first application from the cache and only creates the last 2 layers with the new sources and the new ENTRYPOINT. This way docker builds images faster and efficiently saves disk space.
+
+  This is also applicable if you were to update your application code. Whenever you update your application code such as the app.py, in this case docker simply reuses all the previous layers from the cache and quickly rebuilds the application image by updating the latest source code thus saving us a lot of time during rebuilds and updates.
+
+  Once the build is complete you cannot the modify the contents of these layers and so they are read only and we can only modify them by initiating a new build. When we run a container based off of this image, using the docker urn command. Docker creates a container based off of these layers and creates a new writeable layer on top of the image layer. The writable layer is used to store data crated by container such as log files by the applications, any temporary files generated by the container or just any file modified by the user on that container. The life of this layer is only as long as the container is alive. When the container is destroyed this layer and all of the changes in it are also destroyed. Remember the same image layer is shared by all containers created using this image. If we were to login to the newly created container and say create a new file called temp.txt, it would create that file in the container layer which is read and write. We just said that files in image layer are read only, meaning we cannot edit anything in those layers. No, we can still modify this file, but before we save the modified file docker automatically creates a copy of the file in the read write layer and we will than be modifying a different version of the file in the read write layer. All future modifications will be done on this copy of the file in the read write layer. This is called `COPY-ON-WRITE` mechanism. The image layer being read only just means that the files in these layers will not be modified in the image itself. So the image will remain the same all the time untill we rebuild the image using the `docker build` command.
+
+## Persisting Data on Docker
+
+  What happens when we get rid of the container. All of the data that was stored in the container layer also gets deleted.The change we made to the app.py and the new temp file we created also get removed. So what if we wish to persist data
 
 </strong>
 </p>
