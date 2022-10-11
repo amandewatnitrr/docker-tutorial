@@ -137,6 +137,5 @@
   - Overlay2
 - The selecion of the storage driver depend on the underlying OS being used. For example with Ubuntu, the default storage driver is AUFS, while this driver is not available on other OS like Fedora or Cent OS. In that case device mapper may be a good option. Docker will choose the best storage driver avaialable automatically based on the OS. The different storage drives also have different performance and stability charateristics, so we may want to choose one that fits the need of our application and our organization.
 
-
 </strong>
 </p>
