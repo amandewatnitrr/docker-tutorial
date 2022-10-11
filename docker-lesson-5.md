@@ -118,7 +118,25 @@
 
 ## Persisting Data on Docker
 
-  What happens when we get rid of the container. All of the data that was stored in the container layer also gets deleted.The change we made to the app.py and the new temp file we created also get removed. So what if we wish to persist data
+- What happens when we get rid of the container. All of the data that was stored in the container layer also gets deleted.The change we made to the app.py and the new temp file we created also get removed. So what if we wish to persist data. For example if we were working with a database and we would like to preserve data created by the container, we can add a persistent volume to the container. To do this first create a volume using the `docker volume create data_volume_name` command. When we run this command, it creates a folder called `data_volume_name` within the volumes folder inside the `/var/lib/docker/volumes` directory. Then when we run the `docker run -d -v data_volume_name:/var/lib/mysql mysql` command. We can mount this volume inside the docker containers read write layer using `-v` option like this. So, when we run the mentioned docker run command the data will be stored inside mysql folder which is the default location where mysql stores data and that is `var/lib/mysql`. This will create a new container and mount the data volume we created into var/lib/mysql folder inside the container. So all data written by database is infact stored on the volume created on the docker host. Even if the container is destroyed the data still remains.
+
+- Now what if we don't run the `docker volume create data_volume_name` command to create the volume before the docker run command. For example if I run the `docker run` command to cretae a new instance of mysql container with the a non-exsisting volume, docker will automatically create a volume, name it and mount it to the container. We should be able to see all these volumes if we list the contents of var/lib/docker/volumes folder. This us called `Volume Mounting` as we are mounting in volume created by docker under the /var/lib/docker/volumes folder.
+
+- But what if we already have our data at another location. For example, let's say we have some external data storage on the docker host at `/data` and we would like to store database data on that volume and not in the default var/lib/docker/volumes folder. In that case we would run a container using the `docker run -v /folder_path:/var/lib/mysql mysql` command. Here we will specify the complete path to the folder where we want data to be stored and so it will create a container and mount the folder to the container. This is called `Bind Mounting`.
+
+- So, there are 2 types of mounts `Volume mounting` and `Bind Mounting`.
+- Volume mount mounts a volume from the volumes directory and Bind Mount mounts a directory from another location on the docker host.
+- Note: Using `-v` is an old option, `-mount` is more prefered way as it is more verbose. So, we have to specify each parameter in key equals value format. So the previous command can be written as `docker run \ --mount type=bind,source=/data/mysql, target=/var/lib/mysql mysql` using the type, source and target options respectively.
+- So, who is responsible for doing all these operations, maintaining the layered architecture, creating a writeable layer, moving files across layers to enable copy and write etc. It's the storage drivers.
+- So, docker uses `Storage Drivers` to enable layered architecture. Some of the common storage drivers are:
+  - AUFS
+  - ZFS
+  - BTRFS
+  - Device Mapper
+  - Overlay
+  - Overlay2
+- The selecion of the storage driver depend on the underlying OS being used. For example with Ubuntu, the default storage driver is AUFS, while this driver is not available on other OS like Fedora or Cent OS. In that case device mapper may be a good option. Docker will choose the best storage driver avaialable automatically based on the OS. The different storage drives also have different performance and stability charateristics, so we may want to choose one that fits the need of our application and our organization.
+
 
 </strong>
 </p>
