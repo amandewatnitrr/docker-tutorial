@@ -31,7 +31,7 @@
 - So, we just saw that default bridge network with the network ID `172.17.0.1`. So, all containers asssociated to this default network will be able to communicate with each other. But what if we wish to isolate the containers within the docker host.
 - For example, the first 2 web containers on interal network 172 and second container on a different internal network let's assume to be 182.
 - By default docker only creates one internalbridge network.
-- We can create our own internal network using the command `docker network create \ --driver driver_name\ --subnet subnet_IP custom-isolated-network-name`.
+- We can create our own internal network using the command `docker network create --driver driver_name --subnet subnet_IP --gateway gateway_IP custom-isolated-network-name`.
 - Run the `docker network ls` command to list all networks.
 
 ## Inspect Network
@@ -41,7 +41,7 @@
 ## Embedded DNS
 
 - Container can reach each other using there names.
-- For example, let;s assume a case where we have Web Server and MySQL Database container running on the same note.
+- For example, lets assume a case where we have Web Server and MySQL Database container running on the same note.
 - How can I get my web server to access the database on the database container.
 
   - One thing we can do is use the Internal IP assigned to mysql container whcih in this case assume to be 172.70.0.3 because that is not very ideal and not guaranted that the container will get the same IP when the system reboots right away.
