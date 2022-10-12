@@ -1,5 +1,7 @@
 # Getting started with Docker
 
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker.png)
+
 <p align="justify">
 <strong>
 

@@ -54,6 +54,32 @@
 
 - Docker uses network namespaces that creates a seprate namespace for each container. It then uses virtual ethernet pairs to connect containers together.
 
+# Container Orchestration
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker6.png)
+
+- So, far we have lernt how we can run single instance of an appication with a simple `docker run` command. In this case to run a node.js based appliction, we run `docker run nodejs` command.
+
+- But that's just one instance of our application on one docker host. What happens when the number of users increase and that instance is no longer able to handle the load. We deploy additional instance of our application by running the `docker run` command multiple times. That's something we need to do manually.
+
+- We have to keep a close watch on the load and performance of our application and deploy additional instances by our own. And not just that we have to keep a close watch on the help of these applications. And if a container was to fail, we should be able to detect that and run `docker run` command again to deploy another instance of that application.
+
+- What about the health of Docker Host itself. What if the host crashes and is inaccessible. The Containers hosted on that host become inaccessible too. So, what to do to resolve such issues. We will need a dedicated engineer who can sit and monitor the  state, performance and health of containers and take nessecary actions to remidate the situation.
+
+- But when we have large applications deployed with tens and thousands of containers that's not a practical approach. So, you can build your own scripts and that will help you tackle these issues to some extent.
+
+![](https://github.com/amandewatnitrr/docker-tutorial/blob/master/imgs/Docker8.png)
+
+- `Container Orchestration` is just the solution for this problem. It is a solution that consists of set of tools and scripts that can help host containers in a  production environment.Typically a Container Orchestration soution consists of multiple dokcer hosts that can host containers.
+
+- That way even if one fails, the application is still accessible through the others. A Container Orchestration solution easily allows you to deploy hundreds or thousands of instances of your application with single command. This is the command used for Docker Swarm. Some of these orchestration solution can help you automatically scale up the number of instances when users increase and scale down the number of instances when the demand decreases.
+
+- Some solutions can even help you in automatically adding additional hosts to support the user load and not just clustering and scaling.
+- The Container Orchestration solutions also provide support for advanced networking b/w containers across different hosts as well as Load Balancing user requests across different host.
+- They also provide support for sharing storage b/w host as well as support for configuration management and security within the cluster.
+- There are multiple container orchestration solutions available today. <img src="https://img.shields.io/badge/Docker-2496ED?style=plastic&logo=Docker&logoColor=white"> has <img src="https://img.shields.io/badge/Docker_Swarm-2496ED?style=plastic&logo=Docker&logoColor=white">, <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=plastic&logo=Kubernetes&logoColor=white"> from <img src="https://img.shields.io/badge/Google-4285F4?style=plastic&logo=Google&logoColor=white">, <img src="https://img.shields.io/badge/MESOS-7A1FA2?style=plastic&logo=Gmail&logoColor=white"> from <img src="https://img.shields.io/badge/Apcahe-D22128?style=plastic&logo=Apache&logoColor=white">.
+- While Docker Swarm is really easy to setup and get started. It lacks some of the advanced auto-scaling features required for complex production great applications. MESOS on the other hand is quite difficult to setup and get started but supports many advanced features. Kubernetes arguably the most popular of it is a bit difficult to setup and get started but provides a lot of ooptions, to customize deployments and has support for many different vendors, credit that it is now supported on all public cloud service providers like GCP, Azure and AWS.
+- The Kubernetes project is one of the top most ranked projects on the github 
 
 </strong>
 </p>
