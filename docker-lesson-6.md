@@ -79,7 +79,9 @@
 - They also provide support for sharing storage b/w host as well as support for configuration management and security within the cluster.
 - There are multiple container orchestration solutions available today. <img src="https://img.shields.io/badge/Docker-2496ED?style=plastic&logo=Docker&logoColor=white"> has <img src="https://img.shields.io/badge/Docker_Swarm-2496ED?style=plastic&logo=Docker&logoColor=white">, <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=plastic&logo=Kubernetes&logoColor=white"> from <img src="https://img.shields.io/badge/Google-4285F4?style=plastic&logo=Google&logoColor=white">, <img src="https://img.shields.io/badge/MESOS-7A1FA2?style=plastic&logo=Gmail&logoColor=white"> from <img src="https://img.shields.io/badge/Apcahe-D22128?style=plastic&logo=Apache&logoColor=white">.
 - While Docker Swarm is really easy to setup and get started. It lacks some of the advanced auto-scaling features required for complex production great applications. MESOS on the other hand is quite difficult to setup and get started but supports many advanced features. Kubernetes arguably the most popular of it is a bit difficult to setup and get started but provides a lot of ooptions, to customize deployments and has support for many different vendors, credit that it is now supported on all public cloud service providers like GCP, Azure and AWS.
-- The Kubernetes project is one of the top most ranked projects on the github 
+- The Kubernetes project is one of the top most ranked projects on the github.
+
+# Docker Swarm
 
 </strong>
 </p>
