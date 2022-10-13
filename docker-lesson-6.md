@@ -83,5 +83,18 @@
 
 # Docker Swarm
 
+- With Docker Swarm, we can now combine multiple Docker machines together into a single cluster.
+- It takes care of the distributing your services or your application instances into seprate hosts for  high availablility and for load balancing across different systems and hardware.
+- To setup a Docker swarm, you must first have hosts or multiple hosts with Docker installed on them. Then you must designate one host to be the manager or the master or it's the swarm manager and others as slaves or workers. Once we are done with that run the docker swarm init command on the swarm manager and that will initialize the swarm manager using the command `docker swarm init --advertise-addr ip_address`. The output of this command will provide the command to be run on the workers to copy the command and run it on worker nodes to join the manager.
+- After joining the swarm the workers are also refereed as nodes and now we can create services and deploy them on the swarm cluster.
+
+## Docker Service
+
+- As we already know, to run an instance of my web server, I run the `docker run` command and specift the name of the image I wish to run. This creates a new container instance of my application and serves on my web server. Now that we have learned how to create a swarm cluster, how do I utilize my cluster to run multiple instnces of my web server.
+  - One way to this is to run the `docker run` command on each worker node. But that's not ideal as we might have to login into each node and run this command and there could be hundreds of nodes. We will have to setup Load Balancing ourselves, allowed to monitor the state of each instance myself and if any instances were to fail, I'll have to restart them myself. S, it's going to be a immpossible task.
+  - That's where Docker swarm orchestration concerning dockers comes into picture. It does all this work for us. The Key component of Swarm Orchestration is Docker Service. Docker Serivce ar one or more instances of a single application or service that runs across the site. The nodes in swarm cluster for example, in this case, we could create a docker service to run multiple instances of my web server application across worker nodes in my swarm cluster. For this I run the `docker service create` command on the manager node and specify our image name there, which is our web-server in this case and use the option `--replicas` to specify the number of instances of my web server I would like to run across the cluster. The command would actually look something like: `docker service create --replicas=3 my-web-server`. Since, we specified 3 replicas here, we get 3 instances of my web server distributed across different worker nodes.
+
+  Note: The `docker service create` command must be run on the manager node and not on the worker node. It is somewhat similar to docker urn command, in terms of the options in the past such as `-e` for environment variables, `-p` for publishing ports, `--network` option to attach container to a network etc.
+
 </strong>
 </p>
